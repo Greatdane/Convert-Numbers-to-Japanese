@@ -2,7 +2,7 @@
 # currently using length functions - possible to use Recursive Functions?
 # Works only up to sen man for now.
 
-romanji_dict = {"0": "zero", "1": "ichi", "2": "ni", "3": "san", "4": "yon", "5": "go", "6": "roku", "7": "nana",
+romaji_dict = {"0": "zero", "1": "ichi", "2": "ni", "3": "san", "4": "yon", "5": "go", "6": "roku", "7": "nana",
                 "8": "hachi", "9": "kyuu", "10": "juu", "100": "hyaku", "1000": "sen", "10000": "man", "100000000": "oku",
                 "300": "sanbyaku", "600": "roppyaku", "800": "happyaku", "3000": "sanzen", "8000":"hassen"}
 
@@ -189,6 +189,6 @@ requested_dict = hiragana_dict
 convert_result = convert(convert_num)
 convert_result = remove_spaces(convert_result)
 print("Hiragana: " + convert_result)
-# Romanji
-requested_dict = romanji_dict
-print("Romanji: " + convert(convert_num))
+# Romaji
+requested_dict = romaji_dict
+print("Romaji: " + convert(convert_num))

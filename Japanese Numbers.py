@@ -2,16 +2,16 @@
 # currently using length functions - possible to use Recursive Functions?
 # Works only up to sen man for now.
 
-romanji_dict = {"0": "zero", "1": "ichi", "2": "ni", "3": "san", "4": "yon", "5": "go", "6": "roku", "7": "nana",
-                "8": "hachi", "9": "kyuu", "10": "juu", "100": "hyaku", "1000": "sen", "10000": "man", "100000000": "oku",
-                "300": "sanbyaku", "600": "roppyaku", "800": "happyaku", "3000": "sanzen", "8000":"hassen"}
+romaji_dict = {"0": "zero", "1": "ichi", "2": "ni", "3": "san", "4": "yon", "5": "go", "6": "roku", "7": "nana",
+               "8": "hachi", "9": "kyuu", "10": "juu", "100": "hyaku", "1000": "sen", "10000": "man", "100000000": "oku",
+               "300": "sanbyaku", "600": "roppyaku", "800": "happyaku", "3000": "sanzen", "8000":"hassen"}
 
 kanji_dict = {"0": "零", "1": "一", "2": "二", "3": "三", "4": "四", "5": "五", "6": "六", "7": "七",
-                "8": "八", "9": "九", "10": "十", "100": "百", "1000": "千", "10000": "万", "100000000": "億",
+              "8": "八", "9": "九", "10": "十", "100": "百", "1000": "千", "10000": "万", "100000000": "億",
               "300": "三百", "600": "六百", "800": "八百", "3000": "三千", "8000":"八千"}
 
 hiragana_dict = {"0": "ゼロ", "1": "いち", "2": "に", "3": "さん", "4": "よん", "5": "ご", "6": "ろく", "7": "なな",
-                "8": "はち", "9": "きゅう", "10": "じゅう", "100": "ひゃく", "1000": "せん", "10000": "まん", "100000000": "おく",
+                 "8": "はち", "9": "きゅう", "10": "じゅう", "100": "ひゃく", "1000": "せん", "10000": "まん", "100000000": "おく",
                  "300": "さんびゃく", "600": "ろっぴゃく", "800": "はっぴゃく", "3000": "さんぜん", "8000":"はっせん" }
 
 def len_one(convert_num):
@@ -166,7 +166,6 @@ def remove_spaces(convert_result):
     return correction
 
 
-
 # Start
 convert_num = input("Enter a Western number: ")
 # Exit if length is greater than current limit
@@ -189,6 +188,6 @@ requested_dict = hiragana_dict
 convert_result = convert(convert_num)
 convert_result = remove_spaces(convert_result)
 print("Hiragana: " + convert_result)
-# Romanji
-requested_dict = romanji_dict
-print("Romanji: " + convert(convert_num))
+# Romaji
+requested_dict = romaji_dict
+print("Romaji: " + convert(convert_num))

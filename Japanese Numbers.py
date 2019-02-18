@@ -170,7 +170,7 @@ def remove_spaces(convert_result):
 def kanjiConvert(convert_num):
     # Converts kanji to arabic number
     
-    if convert_num = "零":
+    if convert_num == "零":
         return 0
 
     # First, needs to check for MAN 万 and OKU 億 kanji, as need to handle differently, splitting up the numbers at these intervals.
@@ -250,15 +250,25 @@ def kanjiConvert(convert_num):
 
 # Start
 convert_num = input("Enter a Western (arabic) number or Japanese Kanji: ")
-print("Your requested Number: " + convert_num)
+print("Your requested number is : " + convert_num)
 
 # Get rid of any zeros at the front
 while convert_num[0] == "0":
     convert_num = convert_num[1:]
 
-# Exit if length is greater than current limit
+# Check if input contains Kanji
 if convert_num[0] in kanji_dict.values():
-    print("Western number: " + str(kanjiConvert(convert_num)))
+    # Check to see if 点 (point) is in the input, and handle by splitting at 点, before and after is handled separately
+    if "点" in convert_num:
+        point = convert_num.find("点")
+        endNumber = ""
+        for x in convert_num[point+1:]:
+            endNumber += list(kanji_dict.keys())[list(kanji_dict.values()).index(x)]
+        print("Western number: " + str(kanjiConvert(convert_num[0:point])) + "." + endNumber)
+    else:
+        print("Western number: " + str(kanjiConvert(convert_num)))
+
+# Exit if length is greater than current limit
 elif len(convert_num) > 9:
     print("Number length too long, choose less than 10 digits")
     exit()

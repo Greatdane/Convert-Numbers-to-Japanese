@@ -270,18 +270,23 @@ def do_kanji_convert(convert_num):
     return result
 
 def Convert(convert_num, dict_choice):
-    # Format
+    # Formatting
     convert_num = str(convert_num)
     convert_num = convert_num.replace(',','')
     dict_choice = dict_choice.lower()
+
+    # If all is selected, return as a list
+    if dict_choice == "all":
+        result_list = []
+        for x in "kanji", "hiragana", "romaji":
+            result_list.append(Convert(convert_num,x))
+        return result_list
+
     dictionary = key_dict[dict_choice]
     
     # Exit if length is greater than current limit
     if len(convert_num) > 9:
         return("Number length too long, choose less than 10 digits")
-
-    # To implement, return all choice as a list.
-    # if dict_choice = "all"
 
     # remove any leading zeroes
     while convert_num[0] == "0" and len(convert_num) > 1:
@@ -309,17 +314,18 @@ def ConvertKanji(convert_num):
         else:
             return(str(do_kanji_convert(convert_num)))
 
-#tests
-print(Convert(20.8,"romaji"))
-print(Convert(20.8,"hiragana"))
-print(Convert(20.8,"kanji"))
-print(Convert("20.8","kanji"))
-print(Convert("9000000000","kanji"))
-print(Convert(8230000000,"kanji"))
-print(ConvertKanji("二十点五"))
-print(ConvertKanji("二十五"))
-print(Convert("344", "Kanji"))
-print(Convert("344.44", "Kanji"))
+# #tests
+# print(Convert(20.8,"romaji"))
+# print(Convert(20.8,"hiragana"))
+# print(Convert(20.8,"kanji"))
+# print(Convert("20.8","kanji"))
+# print(Convert("9000000000","kanji"))
+# print(Convert(8230000000,"kanji"))
+# print(ConvertKanji("二十点五"))
+# print(ConvertKanji("二十五"))
+# print(Convert("344", "Kanji"))
+# print(Convert("344.44", "Kanji"))
+# print(Convert(3140,"all"))
 
 # # To fix
 # print(Convert(10000000,'kanji'))

@@ -1,28 +1,31 @@
 # Convert-Numbers-to-Japanese
 Converts Arabic numerals, or 'western' style numbers to a Japanese context.
 
-Usage:
+![Python 3x](https://img.shields.io/badge/python-3.x-blue.svg)
+
+##Usage:
 ``` bash
 Convert(number,type)
 ``` 
-types; "kanji", "hiragana", "romaji"
-
-Examples:
-``` bash
-Convert(20.8,"romaji")
-Convert(2000,"hiragana")
-Convert(458,"kanji")
-``` 
+types; "kanji", "hiragana", "romaji", "all"
+all will return a list of kanji, hiragana and romaji conversions
 
 Can also convert Kanji to 'western' number using:
 ``` bash
 ConvertKanji(kanji)
 ``` 
 
-Examples:
+##Examples:
+``` bash
+Convert(20.8,"romaji")
+Convert(2000,"hiragana")
+Convert(458,"kanji")
+Convert(3140,"all")
+``` 
+
 ``` bash
 ConvertKanji("二十点五")
 ConvertKanji("二十五")
 ``` 
 
-Online version here available here: http://www.japanesenumberconverter.com
+Online version here available here: https://www.japanesenumberconverter.com/

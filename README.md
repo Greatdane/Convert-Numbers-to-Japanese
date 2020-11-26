@@ -3,24 +3,24 @@ Converts Arabic numerals, or 'western' style numbers to a Japanese context.
 
 ![Python 3x](https://img.shields.io/badge/python-3.x-blue.svg)
 
-##Usage:
+## Usage:
 ``` bash
 Convert(number,type)
 ``` 
-types; "kanji", "hiragana", "romaji", "all"
-all will return a list of kanji, hiragana and romaji conversions
+**Types;** "kanji", "hiragana", "romaji", "all"\
+"all" will return a list of kanji, hiragana and romaji conversions
 
 Can also convert Kanji to 'western' number using:
 ``` bash
 ConvertKanji(kanji)
 ``` 
 
-##Examples:
+### Examples:
 ``` bash
 Convert(20.8,"romaji")
 Convert(2000,"hiragana")
 Convert(458,"kanji")
-Convert(3140,"all")
+Convert(31400,"all")
 ``` 
 
 ``` bash

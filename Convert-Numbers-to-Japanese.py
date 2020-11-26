@@ -4,7 +4,7 @@
 
 romaji_dict = {".": "ten", "0": "zero", "1": "ichi", "2": "ni", "3": "san", "4": "yon", "5": "go", "6": "roku", "7": "nana",
                 "8": "hachi", "9": "kyuu", "10": "juu", "100": "hyaku", "1000": "sen", "10000": "man", "100000000": "oku",
-                "300": "sanbyaku", "600": "roppyaku", "800": "happyaku", "3000": "sanzen", "8000":"hassen"}
+                "300": "sanbyaku", "600": "roppyaku", "800": "happyaku", "3000": "sanzen", "8000":"hassen", "01000": "issen"}
 
 kanji_dict = {".": "点", "0": "零", "1": "一", "2": "二", "3": "三", "4": "四", "5": "五", "6": "六", "7": "七",
                 "8": "八", "9": "九", "10": "十", "100": "百", "1000": "千", "10000": "万", "100000000": "億",
@@ -12,7 +12,7 @@ kanji_dict = {".": "点", "0": "零", "1": "一", "2": "二", "3": "三", "4": "
 
 hiragana_dict = {".": "てん", "0": "ゼロ", "1": "いち", "2": "に", "3": "さん", "4": "よん", "5": "ご", "6": "ろく", "7": "なな",
                 "8": "はち", "9": "きゅう", "10": "じゅう", "100": "ひゃく", "1000": "せん", "10000": "まん", "100000000": "おく",
-                 "300": "さんびゃく", "600": "ろっぴゃく", "800": "はっぴゃく", "3000": "さんぜん", "8000":"はっせん" }
+                 "300": "さんびゃく", "600": "ろっぴゃく", "800": "はっぴゃく", "3000": "さんぜん", "8000":"はっせん", "01000": "いっせん" }
 
 key_dict = {"kanji" : kanji_dict, "hiragana" : hiragana_dict, "romaji": romaji_dict}
 
@@ -69,7 +69,7 @@ def len_three(convert_num,requested_dict):
     output = output[:len(output) - 1]  # take off the space
     return output
 
-def len_four(convert_num,requested_dict):
+def len_four(convert_num,requested_dict, stand_alone):
     # Returns the conversion, when number is of length four (1000-9999)
     num_list = []
     # First, check for zeros (and get deal with them)
@@ -85,8 +85,10 @@ def len_four(convert_num,requested_dict):
         return len_three(convert_num,requested_dict)
     # If no zeros, do the calculation
     else:
-        if convert_num[0] == "1":
+        if convert_num[0] == "1" and stand_alone:
             num_list.append(requested_dict["1000"])
+        elif convert_num[0] == "1":
+            num_list.append(requested_dict["01000"])
         elif convert_num[0] == "3":
             num_list.append(requested_dict["3000"])
         elif convert_num[0] == "8":
@@ -121,23 +123,23 @@ def len_x(convert_num,requested_dict):
         num_list.append(len_three(convert_num[0:3],requested_dict))
         num_list.append(requested_dict["10000"])
     elif len(convert_num[0:-4]) == 4:
-        num_list.append(len_four(convert_num[0:4],requested_dict))
+        num_list.append(len_four(convert_num[0:4],requested_dict, False))
         num_list.append(requested_dict["10000"])
     elif len(convert_num[0:-4]) == 5:
         num_list.append(requested_dict[convert_num[0]])
         num_list.append(requested_dict["100000000"])
-        num_list.append(len_four(convert_num[1:5],requested_dict))
+        num_list.append(len_four(convert_num[1:5],requested_dict, False))
         if convert_num[1:5] == "0000":
             pass
         else:
             num_list.append(requested_dict["10000"])
     else:
         return("Not yet implemented, please choose a lower number.")
-    num_list.append(len_four(convert_num[-4:],requested_dict))
+    num_list.append(len_four(convert_num[-4:],requested_dict, False))
     output = ""
     for y in num_list:
          output += y + " "
-    output = output[:len(output) - 1]
+    output = output[:len(output) - 1]       
     return output
 
 def remove_spaces(convert_result):
@@ -162,7 +164,7 @@ def do_convert(convert_num,requested_dict):
         convert_result = len_three(convert_num,requested_dict)
         return(convert_result)
     elif len(convert_num) == 4:
-        convert_result = len_four(convert_num,requested_dict)
+        convert_result = len_four(convert_num,requested_dict, True)
         return(convert_result)
     else:
         convert_result = len_x(convert_num,requested_dict)
@@ -288,14 +290,17 @@ def Convert(convert_num, dict_choice):
     if len(convert_num) > 9:
         return("Number length too long, choose less than 10 digits")
 
-    # remove any leading zeroes
+    # Remove any leading zeroes
     while convert_num[0] == "0" and len(convert_num) > 1:
         convert_num = convert_num[1:]
 
+    # Check for decimal places
     if "." in convert_num:
         result = split_Point(convert_num,dict_choice)
     else:
         result = do_convert(convert_num, dictionary)
+
+    # Remove spaces and return result
     if key_dict[dict_choice] == romaji_dict:
         pass
     else:
@@ -313,24 +318,3 @@ def ConvertKanji(convert_num):
             return(str(do_kanji_convert(convert_num[0:point])) + "." + endNumber)
         else:
             return(str(do_kanji_convert(convert_num)))
-
-# #tests
-# print(Convert(20.8,"romaji"))
-# print(Convert(20.8,"hiragana"))
-# print(Convert(20.8,"kanji"))
-# print(Convert("20.8","kanji"))
-# print(Convert("9000000000","kanji"))
-# print(Convert(8230000000,"kanji"))
-# print(ConvertKanji("二十点五"))
-# print(ConvertKanji("二十五"))
-# print(Convert("344", "Kanji"))
-# print(Convert("344.44", "Kanji"))
-# print(Convert(3140,"all"))
-
-# # To fix
-# print(Convert(10000000,'kanji'))
-# print(Convert(11000,'kanji'))
-# print(Convert(110000000,'kanji'))
-# print(Convert(101000,'kanji'))
-
-#  add to kanji dict; "01000": "一千" ALSO romaji and hiragana

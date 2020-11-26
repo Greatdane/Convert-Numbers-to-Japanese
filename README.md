@@ -20,6 +20,7 @@ ConvertKanji(kanji)
 Convert(20.8,"romaji")
 Convert(2000,"hiragana")
 Convert(458,"kanji")
+Convert("458222","kanji")
 Convert(31400,"all")
 ``` 
 
@@ -28,4 +29,4 @@ ConvertKanji("二十点五")
 ConvertKanji("二十五")
 ``` 
 
-Online version here available here: https://www.japanesenumberconverter.com/
+Online version available here: https://www.japanesenumberconverter.com/

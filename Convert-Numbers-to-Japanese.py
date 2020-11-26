@@ -1,6 +1,6 @@
 # Japanese Number Converter
 # - Currently using length functions - possible to use Recursive Functions? Difficult with the many exceptions
-# - Works only up to sen man for now (9 figures)
+# - Works up to 9 figures (999999999)
 
 romaji_dict = {".": "ten", "0": "zero", "1": "ichi", "2": "ni", "3": "san", "4": "yon", "5": "go", "6": "roku", "7": "nana",
                 "8": "hachi", "9": "kyuu", "10": "juu", "100": "hyaku", "1000": "sen", "10000": "man", "100000000": "oku",
@@ -63,10 +63,10 @@ def len_three(convert_num,requested_dict):
             num_list.append(requested_dict[convert_num[2]])
         else:
             num_list.append(len_two(convert_num[1:], requested_dict))
-    output = ""  # convert to a string (from a list)
+    output = ""  
     for y in num_list:
          output += y + " "
-    output = output[:len(output) - 1]  # take off the space
+    output = output[:len(output) - 1]
     return output
 
 def len_four(convert_num,requested_dict, stand_alone):
@@ -85,6 +85,7 @@ def len_four(convert_num,requested_dict, stand_alone):
         return len_three(convert_num,requested_dict)
     # If no zeros, do the calculation
     else:
+        # Have to handle 1000, depending on if its a standalone 1000-9999 or included in a larger number
         if convert_num[0] == "1" and stand_alone:
             num_list.append(requested_dict["1000"])
         elif convert_num[0] == "1":
@@ -111,7 +112,7 @@ def len_four(convert_num,requested_dict, stand_alone):
 
 
 def len_x(convert_num,requested_dict):
-    #Returns everything else.. (up to 9 digits!)
+    #Returns everything else.. (up to 9 digits)
     num_list = []
     if len(convert_num[0:-4]) == 1:
         num_list.append(requested_dict[convert_num[0:-4]])
@@ -155,23 +156,18 @@ def remove_spaces(convert_result):
 def do_convert(convert_num,requested_dict):
     #Check lengths and convert accordingly
     if len(convert_num) == 1:
-        convert_result = len_one(convert_num,requested_dict)
-        return(convert_result)
+        return(len_one(convert_num,requested_dict))
     elif len(convert_num) == 2:
-        convert_result = len_two(convert_num,requested_dict)
-        return(convert_result)
+        return(len_two(convert_num,requested_dict))
     elif len(convert_num) == 3:
-        convert_result = len_three(convert_num,requested_dict)
-        return(convert_result)
+        return(len_three(convert_num,requested_dict))
     elif len(convert_num) == 4:
-        convert_result = len_four(convert_num,requested_dict, True)
-        return(convert_result)
+        return(len_four(convert_num,requested_dict, True))
     else:
-        convert_result = len_x(convert_num,requested_dict)
-        return(convert_result)
+        return(len_x(convert_num,requested_dict))
 
 def split_Point(split_num,dict_choice):
-    # used if a decmial point is in the string.
+    # Used if a decmial point is in the string.
     split_num = split_num.split(".")
     split_num_a = split_num[0]
     split_num_b = split_num[1]
@@ -187,7 +183,7 @@ def split_Point(split_num,dict_choice):
         small_Tsu = Convert(split_num_a,dict_choice)
         small_Tsu = small_Tsu[0:-1] + "t"
         return small_Tsu + key_dict[dict_choice]["."] + split_num_b_end
-    #
+
     return Convert(split_num_a,dict_choice) + " " + key_dict[dict_choice]["."] + split_num_b_end
 
 
@@ -198,7 +194,7 @@ def do_kanji_convert(convert_num):
         return 0
 
     # First, needs to check for MAN 万 and OKU 億 kanji, as need to handle differently, splitting up the numbers at these intervals.
-    # key tells us whether we need to add or multiple the numbers, then we create a list of numbers in an order we need to multipy/add
+    # key tells us whether we need to add or multiply the numbers, then we create a list of numbers in an order we need to add/multiply
     key = []
     numberList = []
     y = ""
@@ -253,7 +249,7 @@ def do_kanji_convert(convert_num):
     result = numberListConverted[0]
     y = 0
 
-    # iterate over the converted list, and either multiply/add as instructed in key list
+    # Iterate over the converted list, and either multiply/add as instructed in key list
     for x in range(1,len(numberListConverted)):
         if key[y] == "plus":
             try:
@@ -272,12 +268,12 @@ def do_kanji_convert(convert_num):
     return result
 
 def Convert(convert_num, dict_choice):
-    # Formatting
+    # Input formatting
     convert_num = str(convert_num)
     convert_num = convert_num.replace(',','')
     dict_choice = dict_choice.lower()
 
-    # If all is selected, return as a list
+    # If all is selected as dict_choice, return as a list
     if dict_choice == "all":
         result_list = []
         for x in "kanji", "hiragana", "romaji":
